@@ -28,7 +28,9 @@ class SignatureController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
      * @param  Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -46,7 +48,9 @@ class SignatureController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
      * @param  Request $request
+     *
      * @return Response
      */
     public function update(Request $request)
