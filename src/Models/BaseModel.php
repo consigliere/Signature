@@ -1,7 +1,7 @@
 <?php
 /**
  * BaseModel.php
- * Created by @rn on 12/28/2016 10:30 AM.
+ * Created by @anonymoussc on 6/5/2017 6:23 AM.
  */
 
 namespace App\Components\Signature\Models;
