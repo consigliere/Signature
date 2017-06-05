@@ -1,7 +1,7 @@
 <?php
 /**
  * PaginationResponseMacroServiceProvider.php
- * Created by @rn on 12/16/2016 3:09 PM.
+ * Created by @anonymoussc on 6/5/2017 6:23 AM.
  */
 
 namespace App\Components\Signature\Providers;
@@ -19,7 +19,7 @@ class PaginationResponseMacroServiceProvider extends ServiceProvider
     public function boot()
     {
         Response::macro('withPaging',
-            function(array $data = [], $page = 0, $limit = 0, $total = 0, array $lists = [], $path = '', array $param = []) {
+            function (array $data = [], $page = 0, $limit = 0, $total = 0, array $lists = [], $path = '', array $param = []) {
 
                 if (!empty($data)) {
                     extract($data);
