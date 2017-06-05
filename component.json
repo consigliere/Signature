@@ -1,15 +1,15 @@
 {
-    "name": "Signature",
-    "alias": "signature",
-    "description": "",
-    "keywords": [],
-    "active": 1,
-    "order": 0,
-    "providers": [
-        "App\\Components\\Signature\\Providers\\SignatureServiceProvider"
-    ],
-    "aliases":{},
-    "files": [
-        "start.php"
-    ]
+  "name"       : "Signature",
+  "alias"      : "signature",
+  "description": "",
+  "keywords"   : [],
+  "active"     : 1,
+  "order"      : 0,
+  "providers"  : [
+    "App\\Components\\Signature\\Providers\\SignatureServiceProvider"
+  ],
+  "aliases"    : {},
+  "files"      : [
+    "start.php"
+  ]
 }
