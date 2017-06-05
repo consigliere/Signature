@@ -1,4 +1,8 @@
 <?php
+/**
+ * QueryBasicServiceProvider.php
+ * Created by @anonymoussc on 6/5/2017 6:25 AM.
+ */
 
 namespace App\Components\Signature\Providers;
 
@@ -65,7 +69,7 @@ class QueryBasicServiceProvider extends ServiceProvider
             $sourcePath => $viewPath,
         ]);
 
-        $this->loadViewsFrom(array_merge(array_map(function($path) {
+        $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/components/querybasic';
         }, \Config::get('view.paths')), [$sourcePath]), 'querybasic');
     }
