@@ -1,7 +1,7 @@
 <?php
 /**
  * QueryBasicTrait.php
- * Created by @rn on 12/16/2016 3:30 PM.
+ * Created by @anonymoussc on 6/5/2017 6:28 AM.
  */
 
 namespace App\Components\Signature\Traits;
@@ -28,7 +28,8 @@ trait QueryBasicTrait
                 $construct = DB::table($table)->orderBy('id', 'desc');
                 $records   = $construct->get();
             }
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -51,7 +52,8 @@ trait QueryBasicTrait
         try {
             $table   = (isset($param['table'])) ? $param['table'] : '';
             $records = DB::table($table)->insert($data);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -74,7 +76,8 @@ trait QueryBasicTrait
         try {
             $table   = (isset($param['table'])) ? $param['table'] : '';
             $records = DB::table($table)->insertGetId($data);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -98,7 +101,8 @@ trait QueryBasicTrait
             $table     = (isset($param['table'])) ? $param['table'] : '';
             $construct = DB::table($table)->where($condition);
             $records   = $construct->get();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -122,7 +126,8 @@ trait QueryBasicTrait
         try {
             $table = (isset($param['table'])) ? $param['table'] : '';
             DB::table($table)->where($condition)->update($data);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -145,7 +150,8 @@ trait QueryBasicTrait
         try {
             $table = (isset($param['table'])) ? $param['table'] : '';
             DB::table($table)->where($condition)->delete();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -171,7 +177,8 @@ trait QueryBasicTrait
                 $id = $request->id[$i];
                 DB::table($table)->where('id', $id)->delete();
             }
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
