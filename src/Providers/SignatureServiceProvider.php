@@ -1,4 +1,8 @@
 <?php
+/**
+ * SignatureServiceProvider.php
+ * Created by @anonymoussc on 6/5/2017 6:26 AM.
+ */
 
 namespace App\Components\Signature\Providers;
 
@@ -25,7 +29,7 @@ class SignatureServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
 
-        $this->loadMigrationsFrom(__DIR__.'/../../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../../Database/Migrations');
     }
 
     /**
@@ -48,10 +52,10 @@ class SignatureServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../../Config/config.php' => config_path('signature.php'),
-        ],'config-signature');
+            __DIR__ . '/../../Config/config.php' => config_path('signature.php'),
+        ], 'config-signature');
         $this->mergeConfigFrom(
-            __DIR__.'/../../Config/config.php', 'signature'
+            __DIR__ . '/../../Config/config.php', 'signature'
         );
     }
 
@@ -64,10 +68,10 @@ class SignatureServiceProvider extends ServiceProvider
     {
         $viewPath = base_path('resources/views/components/signature');
 
-        $sourcePath = __DIR__.'/../../Resources/views';
+        $sourcePath = __DIR__ . '/../../Resources/views';
 
         $this->publishes([
-            $sourcePath => $viewPath
+            $sourcePath => $viewPath,
         ]);
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
@@ -87,7 +91,7 @@ class SignatureServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'signature');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../../Resources/lang', 'signature');
+            $this->loadTranslationsFrom(__DIR__ . '/../../Resources/lang', 'signature');
         }
     }
 
