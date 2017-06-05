@@ -1,4 +1,8 @@
 <?php
+/**
+ * PaginationServiceProvider.php
+ * Created by @anonymoussc on 6/5/2017 6:24 AM.
+ */
 
 namespace App\Components\Signature\Providers;
 
@@ -65,7 +69,7 @@ class PaginationServiceProvider extends ServiceProvider
             $sourcePath => $viewPath,
         ]);
 
-        $this->loadViewsFrom(array_merge(array_map(function($path) {
+        $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/components/pagination';
         }, \Config::get('view.paths')), [$sourcePath]), 'pagination');
     }
