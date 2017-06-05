@@ -1,7 +1,7 @@
 <?php
 /**
  * Pagination.php
- * Created by @rn on 12/16/2016 2:57 PM.
+ * Created by @anonymoussc on 6/5/2017 6:27 AM.
  */
 
 namespace App\Components\Signature\Traits;
@@ -21,7 +21,8 @@ trait Pagination
             $table = (isset($param['table'])) ? $param['table'] : '';
 
             $records = DB::table($table)->count();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -46,7 +47,8 @@ trait Pagination
             $table = (isset($param['table'])) ? $param['table'] : '';
 
             $records = DB::table($table)->skip($from)->take($limit)->orderBy('id', 'desc')->get();
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
@@ -76,7 +78,7 @@ trait Pagination
     }
 
     /**
-     * @param null $total
+     * @param null  $total
      * @param array $lists
      * @param array $param
      *
@@ -96,7 +98,8 @@ trait Pagination
             $records['total'] = (is_null($total)) ? $this->dataCount(['table' => $table]) : $total;
             $records['lists'] = (empty($lists)) ? $this->dataLists((($records['page'] - 1) * $records['limit']), $records['limit'], ['table' => $table]) : $lists;
             $records['path']  = $this->requestPath($uri);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             $records = [
                 'status' => false,
                 'e'      => $e,
