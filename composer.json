@@ -13,6 +13,6 @@
     }
   },
   "require"    : {
-    "consigliere/signal": "0.1.*"
+    "consigliere/signal": "0.2.*"
   }
 }
