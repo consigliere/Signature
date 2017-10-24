@@ -39,9 +39,9 @@ class SignatureServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register(\App\Components\Signal\Providers\SignalServiceProvider::class);
         $this->app->register(\App\Components\Signature\Providers\PaginationServiceProvider::class);
         $this->app->register(\App\Components\Signature\Providers\QueryBasicServiceProvider::class);
+        $this->app->register(\App\Components\Signal\Providers\SignalServiceProvider::class);
     }
 
     /**
