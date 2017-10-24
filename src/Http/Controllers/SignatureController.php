@@ -5,63 +5,172 @@ namespace App\Components\Signature\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use JsonSerializable;
+use InvalidArgumentException;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Routing\Router;
+use Illuminate\Http\JsonResponse;
+use Optimus\Architect\Architect;
 
+/**
+ * Class SignatureController
+ * @package App\Components\Signature\Http\Controllers
+ */
 class SignatureController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * @return Response
+     * @var array
      */
-    public function index()
-    {
-        return view('signature::index');
-    }
+    protected $defaults = [];
 
     /**
-     * Show the form for creating a new resource.
-     * @return Response
-     */
-    public function create()
-    {
-        return view('signature::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Create a json response
      *
-     * @param  Request $request
+     * @param       $data
+     * @param int   $statusCode
+     * @param array $headers
      *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+    protected function response($data, $statusCode = 200, array $headers = [])
     {
+        if ($data instanceof Arrayable && !$data instanceof JsonSerializable) {
+            $data = $data->toArray();
+        }
+
+        return new JsonResponse($data, $statusCode, $headers);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     * @return Response
+     * @param       $data
+     * @param array $options
+     * @param null  $key
+     *
+     * @return array
      */
-    public function edit()
+    protected function parseData($data, array $options, $key = null)
     {
-        return view('signature::edit');
+        $architect = new Architect();
+
+        return $architect->parseData($data, $options['modes'], $key);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Page sort
      *
-     * @param  Request $request
+     * @param array $sort
      *
-     * @return Response
+     * @return array
      */
-    public function update(Request $request)
+    protected function parseSort(array $sort)
     {
+        return array_map(function ($sort) {
+            if (!isset($sort['direction'])) {
+                $sort['direction'] = 'asc';
+            }
+
+            return $sort;
+        }, $sort);
     }
 
     /**
-     * Remove the specified resource from storage.
-     * @return Response
+     * Parse include strings into resource and modes
+     *
+     * @param array $includes
+     *
+     * @return array
      */
-    public function destroy()
+    protected function parseIncludes(array $includes)
     {
+        $return = [
+            'includes' => [],
+            'modes'    => [],
+        ];
+
+        foreach ($includes as $include) {
+            $explode = explode(':', $include);
+
+            if (!isset($explode[1])) {
+                $explode[1] = $this->defaults['mode'];
+            }
+
+            $return['includes'][]         = $explode[0];
+            $return['modes'][$explode[0]] = $explode[1];
+        }
+
+        return $return;
+    }
+
+    /**
+     * @param array $filter_groups
+     *
+     * @return array
+     */
+    protected function parseFilterGroups(array $filter_groups)
+    {
+        $return = [];
+
+        foreach ($filter_groups as $group) {
+            if (!array_key_exists('filters', $group)) {
+                throw new InvalidArgumentException('Filter group does not have the \'filters\' key.');
+            }
+
+            $filters = array_map(function ($filter) {
+                if (!isset($filter['not'])) {
+                    $filter['not'] = false;
+                }
+
+                return $filter;
+            }, $group['filters']);
+
+            $return[] = [
+                'filters' => $filters,
+                'or'      => isset($group['or']) ? $group['or'] : false,
+            ];
+        }
+
+        return $return;
+    }
+
+    /**
+     * Parse GET parameters into resource options
+     *
+     * @param null $request
+     *
+     * @return array
+     */
+    protected function parseResourceOptions($request = null)
+    {
+        if ($request === null) {
+            $request = request();
+        }
+
+        $this->defaults = array_merge([
+            'includes'      => [],
+            'sort'          => [],
+            'limit'         => null,
+            'page'          => null,
+            'mode'          => 'embed',
+            'filter_groups' => [],
+        ], $this->defaults);
+
+        $includes      = $this->parseIncludes($request->get('includes', $this->defaults['includes']));
+        $sort          = $this->parseSort($request->get('sort', $this->defaults['sort']));
+        $limit         = $request->get('limit', $this->defaults['limit']);
+        $page          = $request->get('page', $this->defaults['page']);
+        $filter_groups = $this->parseFilterGroups($request->get('filter_groups', $this->defaults['filter_groups']));
+
+        if ($page !== null && $limit === null) {
+            throw new InvalidArgumentException('Cannot use page option without limit option');
+        }
+
+        return [
+            'includes'      => $includes['includes'],
+            'modes'         => $includes['modes'],
+            'sort'          => $sort,
+            'limit'         => $limit,
+            'page'          => $page,
+            'filter_groups' => $filter_groups,
+        ];
     }
 }
