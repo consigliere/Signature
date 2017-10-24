@@ -42,6 +42,7 @@ class SignatureServiceProvider extends ServiceProvider
         $this->app->register(\App\Components\Signature\Providers\PaginationServiceProvider::class);
         $this->app->register(\App\Components\Signature\Providers\QueryBasicServiceProvider::class);
         $this->app->register(\App\Components\Signal\Providers\SignalServiceProvider::class);
+        $this->app->register(\Optimus\ApiConsumer\Provider\LaravelServiceProvider::class);
     }
 
     /**
