@@ -15,7 +15,6 @@
   "require"    : {
     "illuminate/support"  : "5.5.*",
     "illuminate/contracts": "5.5.*",
-    "consigliere/signal"  : "0.5.*",
     "optimus/api-consumer": "0.2.*",
     "optimus/genie"       : "~2.0"
   }
