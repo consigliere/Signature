@@ -1,9 +1,18 @@
 <?php
-/**
- * api.php
- * Created by @anonymoussc on 6/27/2017 12:49 PM.
- */
 
-Route::group(['middleware' => 'api', 'prefix' => 'signature', 'namespace' => 'App\\Components\Signature\Http\Controllers'], function () {
-    //
-});
+use Illuminate\Http\Request;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+//Route::middleware('auth:api')->get('/signature', function (Request $request) {
+//    return $request->user();
+//});

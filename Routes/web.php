@@ -1,9 +1,16 @@
 <?php
-/**
- * web.php
- * Created by @anonymoussc on 6/27/2017 12:50 PM.
- */
 
-Route::group(['middleware' => 'web', 'prefix' => 'signature', 'namespace' => 'App\\Components\Signature\Http\Controllers'], function () {
-    // Route::get('/', 'SignatureController@index');
-});
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+//Route::prefix('signature')->group(function() {
+//    Route::get('/', 'SignatureController@index');
+//});
