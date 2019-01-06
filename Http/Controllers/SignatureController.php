@@ -2,14 +2,15 @@
 
 namespace App\Components\Signature\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
+use Illuminate\Http\{
+    Request, Response, JsonResponse
+};
+use Illuminate\Routing\{
+    Controller, Router
+};
+use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 use InvalidArgumentException;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Routing\Router;
-use Illuminate\Http\JsonResponse;
 use Optimus\Architect\Architect;
 
 /**
@@ -32,7 +33,7 @@ class SignatureController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function response($data, $statusCode = 200, array $headers = [])
+    protected function response($data, $statusCode = 200, array $headers = []): JsonResponse
     {
         if ($data instanceof Arrayable && !$data instanceof JsonSerializable) {
             $data = $data->toArray();
@@ -48,7 +49,7 @@ class SignatureController extends Controller
      *
      * @return array
      */
-    protected function parseData($data, array $options, $key = null)
+    protected function parseData($data, array $options, $key = null): array
     {
         $architect = new Architect();
 
@@ -62,7 +63,7 @@ class SignatureController extends Controller
      *
      * @return array
      */
-    protected function parseSort(array $sort)
+    protected function parseSort(array $sort): array
     {
         return array_map(function ($sort) {
             if (!isset($sort['direction'])) {
@@ -80,7 +81,7 @@ class SignatureController extends Controller
      *
      * @return array
      */
-    protected function parseIncludes(array $includes)
+    protected function parseIncludes(array $includes): array
     {
         $return = [
             'includes' => [],
@@ -106,7 +107,7 @@ class SignatureController extends Controller
      *
      * @return array
      */
-    protected function parseFilterGroups(array $filter_groups)
+    protected function parseFilterGroups(array $filter_groups): array
     {
         $return = [];
 
@@ -139,7 +140,7 @@ class SignatureController extends Controller
      *
      * @return array
      */
-    protected function parseResourceOptions($request = null)
+    protected function parseResourceOptions($request = null): array
     {
         if ($request === null) {
             $request = request();
