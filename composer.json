@@ -23,8 +23,8 @@
         }
     },
     "require"    : {
-        "illuminate/support"  : "5.7.*",
-        "illuminate/contracts": "5.7.*",
+        "illuminate/support"  : "5.8.*",
+        "illuminate/contracts": "5.8.*",
         "optimus/api-consumer": "0.2.*",
         "optimus/genie"       : "~2.0"
     }
