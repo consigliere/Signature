@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright(c) 2019. All rights reserved.
+ * Last modified 4/25/19 5:04 PM
+ */
 
 namespace App\Components\Signature\Http\Middleware;
 
@@ -10,13 +14,18 @@ class AcceptJson
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     *
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-        $request->headers->set("Accept", "application/json");
+        $headers = request()->headers->all();
+
+        if (!isset($headers['Accept']) || $headers['Accept'] !== 'application/vnd.api+json') {
+            $request->headers->set("Accept", "application/vnd.api+json");
+        }
 
         return $next($request);
     }
