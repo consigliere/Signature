@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 5/3/19 2:49 AM
+ * Last modified 5/15/19 9:21 PM
  */
 
 /**
@@ -31,5 +31,31 @@ class SignatureService
                 return $val[$key];
             }
         }
+    }
+
+    /**
+     * @param callable $reform
+     * @param array    $data
+     * @param array    $option
+     * @param array    $param
+     *
+     * @return array
+     */
+    public function reform(Callable $reform, array $data = [], array $option = [], $param = []): array
+    {
+        return $reform($data, $option, $param);
+    }
+
+    /**
+     * @param callable $response
+     * @param          $dataObj
+     * @param array    $option
+     * @param array    $param
+     *
+     * @return array
+     */
+    public function transform(Callable $response, $dataObj, array $option = [], array $param = []): array
+    {
+        return $response($dataObj, $option, $param);
     }
 }
