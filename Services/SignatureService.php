@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 5/15/19 9:21 PM
+ * Last modified 5/21/19 1:22 PM
  */
 
 /**
@@ -10,7 +10,6 @@
  */
 
 namespace App\Components\Signature\Services;
-
 
 /**
  * Class SignatureService
@@ -34,6 +33,8 @@ class SignatureService
     }
 
     /**
+     * @deprecated
+     *
      * @param callable $reform
      * @param array    $data
      * @param array    $option
@@ -47,6 +48,8 @@ class SignatureService
     }
 
     /**
+     * @deprecated
+     *
      * @param callable $response
      * @param          $dataObj
      * @param array    $option
