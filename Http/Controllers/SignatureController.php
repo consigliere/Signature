@@ -1,16 +1,18 @@
 <?php
+/**
+ * Copyright(c) 2019. All rights reserved.
+ * Last modified 5/21/19 2:55 PM
+ */
 
 namespace App\Components\Signature\Http\Controllers;
 
-use Illuminate\Http\{
-    Request, Response, JsonResponse
-};
-use Illuminate\Routing\{
-    Controller, Router
-};
 use Illuminate\Contracts\Support\Arrayable;
-use JsonSerializable;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use InvalidArgumentException;
+use JsonSerializable;
 use Optimus\Architect\Architect;
 
 /**
@@ -173,5 +175,37 @@ class SignatureController extends Controller
             'page'          => $page,
             'filter_groups' => $filter_groups,
         ];
+    }
+
+    /**
+     * @param       $id
+     * @param       $errorObj
+     * @param array $arg
+     *
+     * @return array
+     */
+    protected function getErrorResponse($id, $errorObj, array $arg = []): array
+    {
+        $request       = App::get('request');
+        $errorResponse = [];
+
+        data_set($errorResponse, 'error.id', $id);
+
+        if ($errorObj instanceof \Exception) {
+            data_set($errorResponse, 'error.code', $errorObj->getCode());
+            data_set($errorResponse, 'error.title', $errorObj->getMessage());
+
+            if (Config::get('app.env') !== 'production') {
+                data_set($errorResponse, 'error.source.file', $errorObj->getFile());
+                data_set($errorResponse, 'error.source.line', $errorObj->getLine());
+                data_set($errorResponse, 'error.detail', $errorObj->getTraceAsString());
+            }
+        }
+
+        data_set($errorResponse, 'link.self', $request->fullUrl());
+        data_set($errorResponse, 'meta.copyright', 'copyrightⒸ ' . date('Y') . ' ' . Config::get('app.name'));
+        data_set($errorResponse, 'meta.authors', Config::get('user.api.authors'));
+
+        return $errorResponse;
     }
 }
