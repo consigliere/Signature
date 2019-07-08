@@ -1,9 +1,13 @@
 <?php
+/**
+ * Copyright(c) 2019. All rights reserved.
+ * Last modified 7/9/19 2:54 AM
+ */
 
 namespace App\Components\Signature\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
+use Illuminate\Support\ServiceProvider;
 
 class SignatureServiceProvider extends ServiceProvider
 {
@@ -37,6 +41,7 @@ class SignatureServiceProvider extends ServiceProvider
     {
         $this->app->register(RouteServiceProvider::class);
         $this->app->register(\Optimus\ApiConsumer\Provider\LaravelServiceProvider::class);
+        $this->app->register(\App\Components\Signature\Providers\JsonApiResponseMacroServiceProvider::class);
     }
 
     /**
