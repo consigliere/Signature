@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 5/21/19 2:55 PM
+ * Last modified 7/10/19 6:15 AM
  */
 
 namespace App\Components\Signature\Http\Controllers;
@@ -178,13 +178,15 @@ class SignatureController extends Controller
     }
 
     /**
+     * @deprecated
+     *
      * @param       $id
      * @param       $errorObj
-     * @param array $arg
+     * @param array $param
      *
      * @return array
      */
-    protected function getErrorResponse($id, $errorObj, array $arg = []): array
+    protected function getErrorResponse($id, $errorObj, array $param = []): array
     {
         $request       = App::get('request');
         $errorResponse = [];
@@ -192,7 +194,10 @@ class SignatureController extends Controller
         data_set($errorResponse, 'error.id', $id);
 
         if ($errorObj instanceof \Exception) {
-            data_set($errorResponse, 'error.code', $errorObj->getCode());
+            $statusCode = method_exists($errorObj, 'getStatusCode') ? $errorObj->getStatusCode() : 500;
+
+            data_set($errorResponse, 'error.status', (string)$statusCode);
+            data_set($errorResponse, 'error.code', (string)$errorObj->getCode());
             data_set($errorResponse, 'error.title', $errorObj->getMessage());
 
             if (Config::get('app.env') !== 'production') {
@@ -202,7 +207,7 @@ class SignatureController extends Controller
             }
         }
 
-        data_set($errorResponse, 'link.self', $request->fullUrl());
+        data_set($errorResponse, 'links.self', $request->fullUrl());
         data_set($errorResponse, 'meta.copyright', 'copyrightⒸ ' . date('Y') . ' ' . Config::get('app.name'));
         data_set($errorResponse, 'meta.authors', Config::get('user.api.authors'));
 
