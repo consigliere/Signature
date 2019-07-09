@@ -1,0 +1,48 @@
+<?php
+/**
+ * Copyright(c) 2019. All rights reserved.
+ * Last modified 7/10/19 6:17 AM
+ */
+
+namespace App\Components\Signature\Http\Middleware;
+
+use App\Components\Signal\Shared\Signal;
+use App\Components\Signature\Exceptions\AccessDeniedHttpException;
+use App\Components\Signature\Exceptions\UnauthorizedHttpException;
+
+class CheckForAnyScope
+{
+    use Signal;
+
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure                 $next
+     * @param  mixed                    ...$scopes
+     *
+     * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\AuthenticationException|\Laravel\Passport\Exceptions\MissingScopeException
+     */
+    public function handle($request, $next, ...$scopes)
+    {
+        try {
+            if (!$request->user() || !$request->user()->token()) {
+                throw new AccessDeniedHttpException('Access denied');
+            }
+
+            foreach ($scopes as $scope) {
+                if ($request->user()->tokenCan($scope)) {
+                    return $next($request);
+                }
+            }
+
+            throw new UnauthorizedHttpException('Invalid scope(s) provided.');
+        } catch (\Exception $error) {
+            $euuid = randomUuid();
+            $this->fireLog('error', $error->getMessage(), ['error' => $error, 'uuid' => $euuid]);
+
+            return response()->ApiError($euuid, $error);
+        }
+    }
+}
