@@ -1,7 +1,12 @@
 <?php
 /**
+ * CheckForAnyScope.php
+ * Created by @anonymoussc on 07/10/2019 6:25 AM.
+ */
+
+/**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 7/10/19 6:17 AM
+ * Last modified 7/10/19 6:25 AM
  */
 
 namespace App\Components\Signature\Http\Middleware;
