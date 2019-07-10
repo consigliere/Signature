@@ -6,7 +6,7 @@
 
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 6/17/19 3:30 PM
+ * Last modified 7/10/19 6:33 AM
  */
 
 namespace App\Components\Signature\Exceptions;
@@ -15,8 +15,10 @@ use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException as BaseNot
 
 class NotAcceptableHttpException extends BaseNotAcceptableHttpException
 {
-    public function __construct($message = null, \Throwable $previous = null, $code = 0, array $headers = ['Content-Type' => 'application/vnd.api+json',])
+    public function __construct($message = null, \Throwable $previous = null, $code = 0, array $headers = [])
     {
+        $headers = empty($headers) ? ['Content-Type' => 'application/vnd.api+json',] : $headers;
+
         parent::__construct($message, $previous, $code, $headers);
     }
 }
