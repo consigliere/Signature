@@ -6,7 +6,7 @@
 
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 7/10/19 6:26 AM
+ * Last modified 7/10/19 9:03 AM
  */
 
 namespace App\Components\Signature\Providers;
@@ -29,6 +29,7 @@ class JsonApiResponseMacroServiceProvider extends ServiceProvider
     {
         Response::macro('Api', function($data, $statusCode = 200, array $headers = [], $options = 0, array $param = []) {
             $headers = empty($headers) ? ['Content-Type' => 'application/vnd.api+json',] : $headers;
+            $options = 0 === $options ? JSON_UNESCAPED_SLASHES : $options;
 
             if ($data instanceof Arrayable && !$data instanceof JsonSerializable) {
                 $data = $data->toArray();
