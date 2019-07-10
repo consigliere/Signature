@@ -6,7 +6,7 @@
 
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 6/30/19 5:02 PM
+ * Last modified 7/10/19 6:33 AM
  */
 
 namespace App\Components\Signature\Exceptions;
@@ -17,6 +17,8 @@ class UnsupportedMediaTypeHttpException extends BaseUnsupportedMediaTypeHttpExce
 {
     public function __construct($message = null, \Throwable $previous = null, $code = 0, array $headers = [])
     {
+        $headers = empty($headers) ? ['Content-Type' => 'application/vnd.api+json',] : $headers;
+
         parent::__construct($message, $previous, $code, $headers);
     }
 }
