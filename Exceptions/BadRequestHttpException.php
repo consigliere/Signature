@@ -6,7 +6,7 @@
 
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 6/13/19 11:52 PM
+ * Last modified 7/10/19 6:33 AM
  */
 
 namespace App\Components\Signature\Exceptions;
@@ -21,8 +21,10 @@ class BadRequestHttpException extends BaseBadRequestHttpException
      * @param int        $code     The internal exception code
      * @param array      $headers
      */
-    public function __construct(string $message = null, \Throwable $previous = null, int $code = 0, array $headers = ['Content-Type' => 'application/vnd.api+json',])
+    public function __construct(string $message = null, \Throwable $previous = null, int $code = 0, array $headers = [])
     {
+        $headers = empty($headers) ? ['Content-Type' => 'application/vnd.api+json',] : $headers;
+
         parent::__construct($message, $previous, $code, $headers);
     }
 }
