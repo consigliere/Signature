@@ -6,7 +6,7 @@
 
 /**
  * Copyright(c) 2019. All rights reserved.
- * Last modified 7/10/19 9:03 AM
+ * Last modified 7/11/19 6:01 PM
  */
 
 namespace App\Components\Signature\Providers;
@@ -48,6 +48,7 @@ class JsonApiResponseMacroServiceProvider extends ServiceProvider
 
         Response::macro('ApiError', function($id, $error, $statusCode = 500, array $headers = [], $options = 0, array $param = []) {
             $headers    = empty($headers) ? ['Content-Type' => 'application/vnd.api+json',] : $headers;
+            $options    = 0 === $options ? JSON_UNESCAPED_SLASHES : $options;
             $request    = App::get('request');
             $year       = date('Y');
             $name       = config('app.name') ?? 'all right reserved';
